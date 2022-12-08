@@ -21,4 +21,5 @@ module.exports = {
     user_collection: getCollectionFn('users'),
     reviews_collection:getCollectionFn('reviews'),
     event_collection:getCollectionFn('events'),
+    manager_collection:getCollectionFn('manager')
 };
