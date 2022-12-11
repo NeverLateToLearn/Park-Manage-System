@@ -110,7 +110,7 @@ const createUser = async (
   }
 
   //checkUser
-  const checkUser = async (
+const checkUser = async (
     username, 
     password
   ) => {
@@ -175,21 +175,21 @@ const createUser = async (
       throw 'Either the username or password is invalid';
     }
     return { authenticatedUser: true };
-  }
+}
 
   //user register event
-  const userRegisterEvent = async(
+const userRegisterEvent = async(
     uerName,
     eventName
   ) => {
 
-  }
+}
 
   
 
 
 
-  const getUerByName = async (
-    userName,
-  ) => {}
+const getUerByName = async (
+  userName,
+) => {}
   
