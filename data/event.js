@@ -110,6 +110,7 @@ const addEvent = async(
         capacity : capacity,
         date : date,
         space : capacity,
+        registerUsers : [],
         reviews: [],
         overallRating: 0
     }
@@ -133,7 +134,6 @@ const updateEvent = async(
     name,
     capacity,
     date,
-    spaces
 ) => {
     
 }
@@ -142,3 +142,7 @@ const addUerOfEvent = async(
     eventName,
     userName
 )
+
+//getEventById {eventId, String}
+
+//getAllEvent
