@@ -125,7 +125,7 @@ const addEvent = async (
         capacity: capacity,
         date: date,
         space: capacity,
-        resigterUsers: [],
+        registerUsers: [],
         reviews: [],
         overallRating: 0
     }
@@ -200,10 +200,30 @@ const updateEvent = async (
     return { message: "Event updated successfully" };
 }
 
-const addUerOfEvent = async (
+const addUserOfEvent = async (
     eventName,
     userName
 ) => {
     validation(eventName)
-    validation(userName)
+    //validation(userName)
+
+    const events = await searchByEventName(eventName)
+    const users = events.registeredUsers
+    // const list = users && users.filter((e) => {
+    //     if(users){}
+    // })
+
+    return users
+}
+
+module.exports = {
+    getSportsEvents,
+    getArtEvents,
+    getConcertEvents,
+    searchByDate,
+    searchByEventName,
+    addEvent,
+    updateEvent,
+    deleteEvent,
+    addUserOfEvent
 }
