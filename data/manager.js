@@ -66,6 +66,64 @@ const checkManager = async (
     }
     return { authenticatedUser: true };
 }
+const creatManager = async (
+  managerName,
+  passWord
+) => {
+  if(typeof(managerName) === 'undefined'){
+    throw 'managerName is undefined'
+  }
+  if(typeof(passWord) === 'undefined'){
+    throw 'password is undefined'
+  }
+  if(typeof(managerName)!=='string' || managerName.trim().length == 0){
+    throw 'managerName has to be string'
+  }
+  if(typeof(passWord) !== 'string' || passWord.trim().length == 0){
+    throw 'passWord is not string or is empty'
+  }
+  managerName = managerName.trim();
+  passWord = passWord.trim();
+
+  if(managerName.length < 4){
+    throw 'managerName has to be at least 4 characters'
+  }
+  
+  let re = /^[0-9a-zA-Z]+$/;
+
+  if(!managerName.match(re)){
+    throw 'no spaces in the managerName and only alphanumeric characters'
+  }
+
+  if(passWord.length < 6){
+    throw 'password should be at least 6 characters long'
+  }
+
+  let re_2 = /^(?=.*[A-Z])(?=.*\d)[^]{6,}$/;
+  
+  if(!passWord.match(re_2)){
+    throw 'password has to be at least one number and there has to be at least one special character'
+  }
+  managerName = managerName.toLowerCase();
+    const collection  = await managerCollection();
+    let manager = await collection.findOne({managerName: managerName});
+    if(await manager!= null){
+      throw 'managerName is already in the database';
+    }
+
+    // hashcode the password save all information in database
+  let hashed = await bcrypt.hash(passWord, saltRounds);
+  let creatmanager = {
+      managerName : managerName,
+      passWord : hashed,
+  }
+  let creatIn = await collection.insertOne(creatmanager);
+  if(await creatIn.insertedCount === 0){
+      throw 'cannot creat the new manager'
+  }
+  return { userInserted: true };
+}
 module.exports = {
+  creatManager,
   checkManager
 }
