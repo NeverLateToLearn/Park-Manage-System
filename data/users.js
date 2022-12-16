@@ -102,7 +102,6 @@ const createUser = async (
       lastName : lastName,
       age : age,
       reviews: []
-      //reviews and inside is reviewId
     }
     let creatIn = await collection.insertOne(creatNewUser);
     if(await creatIn.insertedCount === 0){
