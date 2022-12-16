@@ -199,9 +199,11 @@ const updateEvent = async (
     validation(type)
     validation(name)
     dateValidation(date)
+    type = type.trim().tolowercase()
+    name = name.trim().tolowercase()
 
     //checking type
-    if (type !== 'sports' && type !== 'art' && type !== 'concert') throw 'Invalid type'
+    if (type !== 'sports' || type !== 'art' || type !== 'concert') throw 'Invalid type'
 
     //checking capacity
     if (!capacity) throw 'Invalid capacity'
