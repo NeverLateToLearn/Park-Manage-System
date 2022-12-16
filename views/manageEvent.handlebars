@@ -23,6 +23,6 @@
 <div class="card-center">
     <h1>Manage Events</h1>
     {{#each events}}
-        <p><a href="/events/edit/{{this._id}}">{{this.name}}</p></a>
+        <p><a href="/events/edit/{{this._id}}">{{this.name}} {{this.date}}</p></a>
     {{/each}}
 </div>

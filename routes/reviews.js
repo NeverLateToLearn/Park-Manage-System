@@ -26,24 +26,29 @@ router
     .route('/:eventId/add')
     .post(async(req,res) =>{
         if (!req.session.user){
-            res.redirect('/');
+            res.redirect('../');
         }
-        let userName = req.session.user;
-        let userId = await userData.getUserByName(userName).toString();
-        const input = req.body;
-        const rating = input.rating;
-        const text = input.text;
-        let isCreat = await reviewData.createReview(req.params.eventId, userId, text, rating);
-        if (isCreat){
-            res.redirect('/user/myProfile');
+        try{
+            let userName = req.session.user;
+            let userId = await userData.getUserByName(userName)._id.toString();
+            const input = req.body;
+            const rating = input.rating;
+            const text = input.text;
+            let isCreat = await reviewData.createReview(req.params.eventId, userId, text, rating);
+            if (isCreat){
+                res.redirect('../events/'+ req.params.eventId);
+            }
+            else {
+                res.render('event',{
+                    title:'event',
+                    error:true,
+                    error_message:'can not create this review'
+                })
+            }
+        }catch(e){
+            res.status(400).json({message:e});
         }
-        else {
-            res.render('event',{
-                title:'event',
-                error:true,
-                error_message:'can not create this review'
-            })
-        }
+
     })
 
 

@@ -3,7 +3,7 @@
     {{#if error}}
         <p>{{error_message}}</p>
     {{/if}}
-    <form method="POST" action="/event/edit/">
+    <form method="POST" action="/event/edit/:eventId">
         <input type="text" name="_id" placeholder="Restaurant ID" value="{{event._id}}" readonly />
         <input type="text" name="name" placeholder="Restaurant Name" value="{{event.type}}" />
         <input type="text" name="website" placeholder="Restaurant Website" value="{{event.name}}"  />

@@ -55,3 +55,4 @@ router
             events:events
         });
     })
+    module.exports = router;

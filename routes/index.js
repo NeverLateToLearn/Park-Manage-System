@@ -1,12 +1,12 @@
 const user = require('./user');
-//const manager = require("./manager");
+const manager = require("./manager");
 const events = require("./events");
-//const reviews = require("./reviews");
+const reviews = require("./reviews");
 
 const constructorMethod = (app) => {
-	//app.use("/reviews", reviews);
+	app.use("/reviews", reviews);
 	app.use("/events", events);
-	//app.use("/manager", manager);
+	app.use("/manager", manager);
 	app.use("/user", user);
 
 	app.get('/',(req,res) => {

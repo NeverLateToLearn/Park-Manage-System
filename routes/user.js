@@ -5,6 +5,7 @@ const data = require('../data');
 const userData = data.userData;
 const eventData = data.eventData;
 const reviewData = data.reviewData;
+const xss = require('xss');
 
 router
     .route('/')
@@ -53,7 +54,7 @@ router
             let firstName = req.body.firstname;
             let lastName = req.body.lastname;
             let age = req.body.age;
-            const createUser = await userData.createUser(userName,password,firstName,lastName,age);
+            const createUser = await userData.createUser(xss(userName),xss(password),xss(firstName),xss(lastName,age));
             if (createUser){
                 res.render('userLogin',{error:true,error_message:"register successfully"});
             }
@@ -61,7 +62,7 @@ router
                 res.status(500).render('userLogin',{
                     title:'Login',
                     error:true,
-                    error_message:"can not crear user"
+                    error_message:"Internal Server Error"
                 })
             }
 
@@ -82,7 +83,7 @@ router
             res.render('logout',{title:'Logout'});
         }
         else{
-            res.redirect('/');
+            res.redirect('../');
         }
     })
 

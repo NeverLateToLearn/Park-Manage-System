@@ -6,7 +6,7 @@
         <h1>{{firstName}} {{lastName}} </h1>
         <p>{{age}}</p>
         </br>
-        <p><a href="/users/myprofile" class="btn">Edit Profile</a></p>
+        <p><a href="/users/myprofile">Edit Profile</a></p>
 
     
     <div class="card-wide" id="right">
@@ -15,10 +15,10 @@
         <div>
                 <div class="reviewHeading">
                     <div class="reviewerName">
-                        <p class = "event_name"><a href="/events/{{this.event._id}}">{{this.event.name}}</a></p>
+                        <p class = "event_name"><a href="/events/{{this.review.event._id}}">{{this.event.name}}</a></p>
                     </div>
                     <div class="reviewerRating">
-                        <p class = "event_rating"><a href="/reviews/{{this.review._id}}">Your Rating: {{this.review.rating}}</a></p>
+                        <p class = "event_rating">>Your Rating: {{this.review.rating}}</a></p>
                     </div>
                 </div>
                 

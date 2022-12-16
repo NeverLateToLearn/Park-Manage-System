@@ -47,12 +47,17 @@ router
             let reviewList = [];
             
             for (let review of event.reviews){
-                review.user = await userData.getUserById(review.userId).username;
+                let u = await userData.getUserById(review.userId);
+                let uu = u.userName;
+                review.user = uu;
                 reviewList.push(review);
             }
             let isUser = false;
             if (req.session.user){
-                for (UserName of event.registerUsers){
+                let userName = req.session.user
+                for (UserId of event.registerUsers){
+                    let un = await userData.getUserById(UserId);
+                    let UserName = un.name;
                     if (UserName == userName){
                         isUser = true;
                     }
@@ -73,9 +78,9 @@ router
                 let userName = req.session.user;
                 userLoggedIn = true;
             }
-            let eventsList = await eventData.getEventsByType("sports");
+            let eventsList = await eventData.getSportsEvents("sports");
             let newEventList = [];
-            for (event of eventsList){
+            for (let event of eventsList){
                 newEventList.push(event);
             }
             res.render('events', {events:newEventList, userLoggedIn:userLoggedIn})
@@ -97,9 +102,9 @@ router
                 let userName = req.session.user;
                 userLoggedIn = true;
             }
-            let eventsList = await eventData.getEventsByType("art");
+            let eventsList = await eventData.getArtEvents("art");
             let newEventList = [];
-            for (event of eventsList){
+            for (let event of eventsList){
                 newEventList.push(event);
             }
             res.render('events', {events:newEventList, userLoggedIn:userLoggedIn})
@@ -121,9 +126,9 @@ router
                 let userName = req.session.user;
                 userLoggedIn = true;
             }
-            let eventsList = await eventData.getEventsByType("concert");
+            let eventsList = await eventData.getConcertEvents("concert");
             let newEventList = [];
-            for (event of eventsList){
+            for (let event of eventsList){
                 newEventList.push(event);
             }
             res.render('events', {events:newEventList, userLoggedIn:userLoggedIn})
@@ -149,7 +154,7 @@ router
             let event = await eventData.searchByEventName(input);
             let reviewList = [];
             if (!event){
-                return res.redirect('/home',{
+                return res.redirect('/',{
                     title:'event',
                     error:true,
                     error_message:'no such event'
@@ -162,7 +167,10 @@ router
             }
             let isUser = false;
             if (req.session.user){
-                for (UserName of event.registerUsers){
+                let userName = req.session.user
+                for (UserId of event.registerUsers){
+                    let un = await userData.getUserById(UserId);
+                    let UserName = un.name;
                     if (UserName == userName){
                         isUser = true;
                     }
@@ -204,7 +212,10 @@ router
             }
             let isUser = false;
             if (req.session.user){
-                for (UserName of event.registerUsers){
+                let userName = req.session.user
+                for (UserId of event.registerUsers){
+                    let un = await userData.getUserById(UserId);
+                    let UserName = un.name;
                     if (UserName == userName){
                         isUser = true;
                     }
@@ -228,19 +239,19 @@ router
         try{
             let added = await eventData.addEvent(body.type, body.name, body.capacity, body.date);
             if (!added){
-                res.redirect('/manager/manageEvent',{
+                res.redirect('../manager/manageEvent',{
                     error:true,
                     error_message:'could not add event'
                 });
             }
             else {
-                res.redirect('/manager/manageEvent',{
+                res.redirect('../manager/manageEvent',{
                     error:true,
                     error_message:'add event successfully'
                 })
             }
         }catch(e){
-            res.redirect('/manager/manageEvent',{
+            res.redirect('../manager/manageEvent',{
                 error:true,
                 error_message:e
             })
@@ -258,25 +269,25 @@ router
     })
 
 router
-    .route('/edit')
+    .route('/edit/:eventId')
     .post(async(req,res) => {
         const body = req.body;
         try{
-            let isUpdate = await eventData.upDateEvent(body.type,body.name,body.capacity,body.date);
+            let isUpdate = await eventData.upDateEvent(req.params.eventId,body.type,body.name,body.capacity,body.date);
             if (isUpdate){
-                res.redirect('/manager/manageEvent',{
+                res.redirect('../manager/manageEvent',{
                     error:true,
                     error_message:'upDate successfully'
                 })
             }
             else {
-                res.redirect('/manager/manageEvent',{
+                res.redirect('../manager/manageEvent',{
                     error:true,
                     error_message:'can not update'
                 })
             }
         }catch(e){
-            res.redirect('/manager/manageEvent',{
+            res.redirect('../manager/manageEvent',{
                 error:true,
                 error_message:e
             })
