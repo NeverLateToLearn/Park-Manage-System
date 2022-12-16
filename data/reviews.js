@@ -179,4 +179,7 @@ const getReviewById = async (
     });
 }
   
-
+module.exports = {
+   createReview,
+   getReviewById
+}

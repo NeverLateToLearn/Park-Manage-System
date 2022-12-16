@@ -282,4 +282,9 @@ const updateUser = async (
   return true;
 }
 
-  
+module.exports = {
+  createUser,
+  checkUser,
+  getUerByName,
+  updateUser
+}

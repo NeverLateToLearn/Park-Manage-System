@@ -1,7 +1,11 @@
 const eventData = require('./event');
 const userData = require('./users');
+const managerData = require('./manager');
+const reviewData = require('./reviews');
 
 module.exports = {
-    users: userData,
-    events: eventData
+    userData: userData,
+    eventData: eventData,
+    reviewData: reviewData,
+    managerData :managerData
 };

@@ -66,3 +66,6 @@ const checkManager = async (
     }
     return { authenticatedUser: true };
 }
+module.exports = {
+  checkManager
+}
