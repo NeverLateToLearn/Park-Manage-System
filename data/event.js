@@ -1,16 +1,18 @@
 //users can opreate
 const mongoCollections = require('../config/mongoCollections');
-const users = mongoCollections.users;
-const events = mongoCollections.events;
+const users = mongoCollections.user_collection;
+const events = mongoCollections.event_collection;
 const { ObjectId } = require('mongodb');
-//const validation = require('../validation');
 
 const validation = (string) => {
-    if (!string) throw 'No date found'
-    if (string === undefined) throw 'undefined date'
-    if (typeof string === 'string') throw 'Invalid date type'
+    let regex = /[^a-zA-Z0-9 ]/
+    if (!string) throw 'No string'
+    if (string === undefined) throw 'undefined string'
+    if (typeof string === 'string') throw 'Invalid string type'
     string = string.trim();
-    if (string.length === 0) throw 'Invalid date'
+    if (string.length === 0) throw 'Invalid string'
+    if (!regex.test(string)) throw 'Invalid string'
+
 }
 
 const dateValidation = (date) => {
@@ -96,6 +98,20 @@ const searchByEventName = async (
     return eventsByName;
 }
 
+const getEventById = async (id) => {
+    //checking id
+    if (id === undefined) throw 'Invalid id'
+    if (typeof id !== 'string') throw 'Invalid id'
+    id = id.trim();
+    if (id.length === 0)
+        throw `Error: ${varName} cannot be an empty string or just spaces`;
+    if (!ObjectId.isValid(id)) throw `Error: ${varName} invalid object ID`;
+
+    const eventCollection = await events();
+    let event = await eventCollection.findOne({ _id: ObjectId(id) });
+
+    return event;
+}
 
 //manager can opreate
 const addEvent = async (
@@ -108,10 +124,14 @@ const addEvent = async (
     validation(name)
     dateValidation(date)
 
+    //checking type
+    if (type !== 'sports' && type !== 'art' && type !== 'concert') throw 'Invalid type'
+
     //checking capacity
-    if (!capacity) throw 'No date found'
-    if (capacity === undefined) throw 'undefined date'
-    if (typeof capacity === 'number') throw 'Invalid date type'
+    if (!capacity) throw 'Invalid capacity'
+    if (capacity === undefined) throw 'undefined capacity'
+    if (typeof capacity === 'number') throw 'Invalid capacity type'
+    if (capacity < 10 || capacity > 100) throw 'Capacity must be between 10 and 100'
 
     const collection = await eventCollection();
     let event = await collection.findOne({ name: name });
@@ -169,10 +189,14 @@ const updateEvent = async (
     validation(name)
     dateValidation(date)
 
+    //checking type
+    if (type !== 'sports' && type !== 'art' && type !== 'concert') throw 'Invalid type'
+
     //checking capacity
-    if (!capacity) throw 'No date found'
-    if (capacity === undefined) throw 'undefined date'
-    if (typeof capacity === 'number') throw 'Invalid date type'
+    if (!capacity) throw 'Invalid capacity'
+    if (capacity === undefined) throw 'undefined capacity'
+    if (typeof capacity === 'number') throw 'Invalid capacity type'
+    if (capacity < 10 || capacity > 100) throw 'Capacity must be between 10 and 100'
 
     //checking id
     if (id === undefined) throw 'Invalid id'
@@ -187,8 +211,7 @@ const updateEvent = async (
         name: name,
         capacity: capacity,
         date: date,
-        space: capacity,
-    };
+    }
 
     const eventCollection = await events();
     const updateInfo = await eventCollection.updateOne(
@@ -205,15 +228,36 @@ const addUserOfEvent = async (
     userName
 ) => {
     validation(eventName)
-    //validation(userName)
+    validation(userName)
 
     const events = await searchByEventName(eventName)
-    const users = events.registeredUsers
-    // const list = users && users.filter((e) => {
-    //     if(users){}
-    // })
+    let eventId = events._id
+    let space = events.space
 
-    return users
+    //const users = events.registeredUsers
+    let arr = []
+    const collection = await users();
+    let user = await collection.findOne({ userName: userName });
+    let id = user._id;
+    arr.push(id)
+
+    if (space === 0) throw 'Event is full, cannot be registered'
+    space = space - 1
+    let userUpdateInfo = {
+        registerUsers: arr,
+        space: space
+    }
+
+    const eventCollection = await events();
+    const updateInfo = await eventCollection.updateOne(
+        { _id: ObjectId(eventId) },
+        { $set: userUpdateInfo }
+    );
+    if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+        throw 'Update failed';
+    return { message: "Event registered successfully" };
+
+
 }
 
 module.exports = {
@@ -222,6 +266,7 @@ module.exports = {
     getConcertEvents,
     searchByDate,
     searchByEventName,
+    getEventById,
     addEvent,
     updateEvent,
     deleteEvent,
