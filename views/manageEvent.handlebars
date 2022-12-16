@@ -1,0 +1,28 @@
+
+    <h1>Add event</h1>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+    <form class="form-container" method="POST" action="/events/add">
+    <label>
+        <input type="text" name="type" placeholder="event type" />
+    </label>
+
+    <label>
+        <input type="text" name="name" placeholder="event name" />
+    </label>
+    <label>
+        <input type="text" name="capacity" placeholder="capacity"/>
+    </label>
+    <label>
+        <input type="text" name="date" placeholder="event date" />
+    </label>
+    <input type="submit" value="Add event" class="btn" />
+    </form>
+
+<div class="card-center">
+    <h1>Manage Events</h1>
+    {{#each events}}
+        <p><a href="/events/edit/{{this._id}}">{{this.name}}</p></a>
+    {{/each}}
+</div>

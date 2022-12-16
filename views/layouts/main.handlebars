@@ -5,11 +5,21 @@
     <title>{{title}}</title>
 </head>
 <body>
-
+    <li><a href="/">Home</a></li>
+    <li><a href="/events">Events</a></li>
+            {{#if userLoggedIn}}
+                <li><a href="/user/userprofile" id="profile">Profile</a></li>
+                <li><a href="/user/logout" id ="logout">Logout</a></li>
+            {{else}}
+                <li><a href="/user/userlogin" id="auth">Login</a></li>
+                <li><a href="/manager">Manager</a></li>
+            {{/if}}
     
     <main>
         {{{body}}}
     </main>
-    
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
 </body>
 </html>

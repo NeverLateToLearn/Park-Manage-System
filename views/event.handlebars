@@ -1,0 +1,44 @@
+<main>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+    <div>
+        <h1>{{event.name}}</h1>
+        <p>{{event.type}}</p>
+        <p>{{event.space}}/{{event.capacity}}</p>
+        <p><a href="/events/{{event._id}}/registerEvent">register this event</a></p>
+        <p>{{event.overallRating}}/5 ({{event.reviews.length}} Reviews)</p>
+    </div>
+    
+    <div>
+        <h2>Reviews</h2>
+        {{#each reviews}}
+                        <div class="reviewerName">
+
+                            <h3>{{this.userName}}</h3>
+                        </div>
+                            <h3>Rating: {{this.rating}}/5</h3>
+
+                    
+                    
+                    <p>{{this.text}}</p>
+        {{/each}}
+    </div>
+    {{#if isUser}}
+    <button onclick="openForm()">Post review</button>>
+    {{/if}}
+    <div class="form-popup" id="myForm">
+        <h2>Post a Review</h2>
+        <form id="post-review-form" name ="post-review-form" action="/reviews/{{event._id}}/add" method="POST">
+            <label>
+                <input type="number" name="rating" id="rating" placeholder="Enter your Rating" required/> 
+            </label>
+            <label>
+                <input type="text" name="text" id="text" placeholder="Enter your Review" required/>
+            </label>
+            <button type="submit">Post!</button>
+            <button type="button" onclick="closeForm()">Cancel</button>
+        </form>
+    </div>
+
+</main>

@@ -5,12 +5,28 @@
     {{/if}}
     <br/>
     <div>
-        <form action="/login" method="POST" id="login-form">
+        <form  method="POST" id="login-form" action="/user/userlogin">
                 <label for="usernameInput">Username:</label>
                 <input type="text" name="usernameInput" id="usernameInput">
                 <label for="passwordInput">Password:</label>
                 <input type="password" name="passwordInput" id="passwordInput">
                 <input type="submit" value="login" id="login">
         </form>
-    <a href="/register">Click here to register</a>    
+        
+    </div>
+    <div>
+        <form method="POST" id="register-form" action="/user/register">
+                <label for="usernameInput">Username:</label>
+                <input type="text" name="usernameInput" id="usernameInput">
+                <label for="passwordInput">Password:</label>
+                <input type="password" name="passwordInput" id="passwordInput">
+                <label for="firstname"> firstName: </label>
+                <input type="text" name="firstname" id="firstname" />  
+                <label for="lastname"> lastName: </label>
+                <input type="text" name="lastname" id="lastname" />
+                <label for="age"> age: </label>
+                <input type="number" name="age" id="age" />
+                <input type="submit" value="register" id="register">
+        </form>
+        
     </div>

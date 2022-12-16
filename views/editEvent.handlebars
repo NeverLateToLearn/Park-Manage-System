@@ -1,0 +1,13 @@
+
+    <h3>Edit Restaurant</h3>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+    <form method="POST" action="/event/edit/">
+        <input type="text" name="_id" placeholder="Restaurant ID" value="{{event._id}}" readonly />
+        <input type="text" name="name" placeholder="Restaurant Name" value="{{event.type}}" />
+        <input type="text" name="website" placeholder="Restaurant Website" value="{{event.name}}"  />
+        <input type="text" name="category" placeholder="Restaurant Category" value="{{event.capacity}}"  />
+        <input type="text" name="address" placeholder="Restaurant Address" value="{{event.date}}" />
+        <input type="submit" value="Edit Restaurant" />
+    </form>

@@ -1,0 +1,19 @@
+<main>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+
+                <h1>event</h1>
+
+    {{#each events}}
+        <div onclick="location.href='../events/{{this._id}}';">
+            <h2><a href="/events/{{this._id}}">{{this.name}}</a></h2>
+            <p {{this.date}}</p>
+            <p>{{this.type}}</p>
+            <p>{{this.space}}/{{this.capacity}}</p>  
+
+            <p>{{this.overallRating}}/5</p>
+
+        </div>
+    {{/each}}
+</main>

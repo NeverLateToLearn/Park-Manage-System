@@ -39,7 +39,7 @@ app.use(async (req, res, next) => {
 	next();
 });
 
-app.use('/protected', (req, res, next) => {
+app.use('/manageEvent', (req, res, next) => {
 	if (!req.session.user) {
 		return res.status(403).render('forbiddenAccess');
 	} else {

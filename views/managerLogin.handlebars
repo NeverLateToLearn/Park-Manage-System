@@ -1,0 +1,15 @@
+    <h1>Login</h1>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+    <br/>
+    <div>
+        <form  method="POST" id="login-form" action="/manager/managerLogin">
+                <label for="managerInput">Username:</label>
+                <input type="text" name="managerInput" id="managerInput">
+                <label for="managerpasswordInput">Password:</label>
+                <input type="password" name="managerpasswordInput" id="managerpasswordInput">
+                <input type="submit" value="login" id="login">
+        </form>
+        
+    </div>

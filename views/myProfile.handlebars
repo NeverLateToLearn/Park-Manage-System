@@ -1,0 +1,28 @@
+<main>
+    {{#if error}}
+        <p>{{error_message}}</p>
+    {{/if}}
+
+        <h1>Hi! {{userName}}</h1>
+        <h1>{{firstName}} {{lastName}}</h1> 
+        <p>{{age}}</p>
+    
+    <div class="card-wide" id="right">
+        <h2>Edit Profile</h2>
+ 
+        <form id="edit-profile" action="/users/myprofile" method="post">
+            <label for="firstName">
+                <input type="text" id="firstName" name="firstName" class="inputFields" placeholder="First Name" value="{{firstName}}">
+            </label>
+            <label for="lastName">
+                <input type="text" id="lastName" name="lastName" class="inputFields" placeholder="Last Name" value="{{lastName}}">
+            </label>
+            <label for="age">
+                <input type="text" id="age" name="age" class="inputFields" placeholder="Age" value="{{age}}">
+            </label>
+            <label>
+                <button type="submit" class = "btn">Confirm</button>
+            </label>
+        </form>
+    </div>
+</main>
