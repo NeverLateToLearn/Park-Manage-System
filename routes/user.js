@@ -19,7 +19,7 @@ router
     })
     .post(async(req, res) => {
         if (req.session.user){
-            res.redirect("/users/profile");
+            res.redirect("/user/userProfile");
         }
         let username = req.body.usernameInput;
         let password = req.body.passwordInput;
@@ -27,7 +27,7 @@ router
             let result = await userData.checkUser(username,password);
             if (result.authenticatedUser){
                 req.session.user = username;
-                return res.redirect("/users/profile");
+                return res.redirect("/user/userProfile");
             }
             else {
                 res.status(500).render('/userLogin',{
@@ -49,17 +49,18 @@ router
     .route('/register')
     .post(async (res, req) => {
         try{
-            let userName = req.body.usernameInput;
-            let password = req.body.passwordInput;
-            let firstName = req.body.firstname;
-            let lastName = req.body.lastname;
-            let age = req.body.age;
-            const createUser = await userData.createUser(xss(userName),xss(password),xss(firstName),xss(lastName,age));
+            let body = req.req.body;
+            let userName = body.usernameInput;
+            let password = body.passwordInput;
+            let firstName = body.firstname;
+            let lastName = body.lastname;
+            let age = body.age;
+            const createUser = await userData.createUser(xss(userName),xss(password),xss(firstName),xss(lastName),Number(xss(age)));
             if (createUser){
-                res.render('userLogin',{error:true,error_message:"register successfully"});
+                res.res.render('userLogin',{error:true,error_message:"register successfully"});
             }
             else {
-                res.status(500).render('userLogin',{
+                res.res.status(500).render('userLogin',{
                     title:'Login',
                     error:true,
                     error_message:"Internal Server Error"
@@ -67,7 +68,7 @@ router
             }
 
           }catch(e){
-            res.status(400).render('userLogin', {
+            res.res.status(400).render('userLogin', {
               title:'Register',
               error:true,
               error_message : e,
@@ -125,33 +126,34 @@ router
     .route('/userProfile')
     .get(async(req,res) => {
         if (!req.session.user){
-            res.status(403).render('/userLogin',{
-                title:'login',
-                error:true,
-                error_message:"please login"
-            });
+            res.status(403).redirect('/user/userLogin');
         }
         else {
-            let userName = req.session.user;
-            let user = await userData.getUserByUserName(userName);
-            let reviews = [];
-            for (let i = 0; i < user.reviews.length;i++){
-                let reviewFromUser = user.reviews[i];
-                let curEvent = await eventData.getEventById(reviewFromUser.eventId);
-                let reviewDetail = {
-                    review:reviewFromUser,
-                    event:curEvent
+            try{
+                let userName = req.session.user;
+                let user = await userData.getUerByName(userName);
+                let reviews = [];
+                for (let i = 0; i < user.reviews.length;i++){
+                    let reviewFromUser = user.reviews[i];
+                    let curEvent = await eventData.getEventById(reviewFromUser.eventId);
+                    let reviewDetail = {
+                        review:reviewFromUser,
+                        event:curEvent
+                    }
+                    reviews.push(reviewDetail);
                 }
-                reviews.push(reviewDetail);
+                res.render('profile',{
+                    userName: userName,
+                    firstName: user.firstName,
+                    lastName:user.lastName,
+                    age:user.age,
+                    reviews:reviews,
+                    userLoggedIn:true
+                })
+            }catch(e){
+                res.status(400).redirect('/user/userLogin');
             }
-            res.render('profile',{
-                name: userName,
-                firstName: user.firstName,
-                lastName:user.lastName,
-                age:user.age,
-                reviews:reviews,
-                userLoggedIn:true
-            })
+
         }
     })
 
@@ -163,7 +165,7 @@ router
         }
         else {
             const curUser = await userData.getUerByName(req.session.user);
-            return res.render('myprofile', {
+            return res.render('myProfile', {
               userName : req.session.user,
               firstName: curUser.firstName,
               lastName: curUser.lastName,
@@ -183,21 +185,28 @@ router
         let firstName = reqData.firstName;
         let lastName = reqData.lastName;
         let age = reqData.age;
+        /*
+        if (typeof(age) !== 'number'){
+            res.status(400).redirect('/user/Profile',{error:true,error_message:'age must be a number'});
+        }
+        */
         let editedUser = {
             firstName:firstName,
             lastName:lastName,
             age:age
         }
         try{
-            const updateUser = await userData.updateUser(req.session.user, editedUser.firstName,editedUser.lastName,editedUser.age);
+            const updateUser = await userData.updateUser(req.session.user, editedUser.firstName,editedUser.lastName,Number(editedUser.age));
             if (!updateUser){
-                return res.status(500).render('myprofile',{
+                return res.status(500).render('profile',{
                     title:'myProfile',
                     error:true,
                     error_message:'could not update user'
                 })
             }
-            return res.render('myprofile',{
+            return res.render('profile',{
+                error:true,
+                error_message:'update successfully',
                 userName:req.session.user,
                 firstName:editedUser.firstName,
                 lastName:editedUser.lastName,
@@ -205,7 +214,11 @@ router
                 userLoggedIn:true
             });
         }catch(e){
-            res.status(400).json({message:e});
+            res.status(400).render('profile',{
+                title:'myprofile',
+                error:true,
+                error_message:e
+            })
         }
     })
 module.exports = router;

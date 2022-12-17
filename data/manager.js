@@ -1,4 +1,6 @@
 //check manager account
+
+const mongoCollections = require('../config/mongoCollections');
 const managerCollection = mongoCollections.manager_collection;
 const checkManager = async (
     username, 

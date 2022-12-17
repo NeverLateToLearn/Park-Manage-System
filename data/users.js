@@ -2,6 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 const userCollection = mongoCollections.user_collection;
 const bcrypt = require('bcrypt');
 const saltRounds = 16;
+const { ObjectId } = require('mongodb');
 
 
 //createUser
@@ -81,7 +82,7 @@ const createUser = async (
       throw 'lastName has to be A-Z or a-z'
     }
     // check the age
-    if(10 < age || age > 100){
+    if(10 > age || age > 100){
       throw 'age is invaild'
     }
   
@@ -130,15 +131,7 @@ const checkUser = async (
     if(typeof(passWord) !== 'string'){
       throw 'password is not a string'
     }
-    if(typeof(firstName) !== 'string'){
-      throw 'firstName is not a string'
-    }
-    if(typeof(lastName) !== 'string'){
-      throw 'lastName is not a string'
-    }
-    if(typeof(age) !== 'number'){
-      throw 'age is not a number'
-    }
+
     //username and the password RE check
     userName = userName.trim();
     passWord = passWord.trim();
@@ -196,8 +189,8 @@ const getUerByName = async (
 
   const users = await userCollection();
   let user = await users.findOne({userName: userName});
-  if(await user!= null){
-      throw 'username is already in the database';
+  if(await user == null){
+      throw 'no user with this name';
   }
   user['_id'] = user['_id'].toString();
   return await user;
@@ -221,7 +214,7 @@ const updateUser = async (
 
   const user = await getUerByName(userName.trim().toLowerCase());
   let userId = user._id;
-  id = Object(userId);
+  let id = ObjectId(userId);
   if(await user == null){
     throw 'can not get the user by this name'
   }
@@ -262,11 +255,11 @@ const updateUser = async (
     throw 'lastName has to be A-Z or a-z'
   }
   // check the age
-  if(10 < age || age > 100){
+  if(10 > age || age > 100){
     throw 'age is invaild'
   }
   let updateUser = {
-    userName: userName,
+    userName: userName.toLowerCase(),
     firstName: firstName,
     lastName: lastName,
     age: age,

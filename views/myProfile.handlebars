@@ -10,7 +10,7 @@
     <div class="card-wide" id="right">
         <h2>Edit Profile</h2>
  
-        <form id="edit-profile" action="/users/myprofile" method="post">
+        <form id="edit-profile" action="/user/myProfile" method="post">
             <label for="firstName">
                 <input type="text" id="firstName" name="firstName" class="inputFields" placeholder="First Name" value="{{firstName}}">
             </label>
@@ -18,7 +18,7 @@
                 <input type="text" id="lastName" name="lastName" class="inputFields" placeholder="Last Name" value="{{lastName}}">
             </label>
             <label for="age">
-                <input type="text" id="age" name="age" class="inputFields" placeholder="Age" value="{{age}}">
+                <input type="number" id="age" name="age" class="inputFields" placeholder="Age" value="{{age}}">
             </label>
             <label>
                 <button type="submit" class = "btn">Confirm</button>
