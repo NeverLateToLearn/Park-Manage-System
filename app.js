@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const configRoutes = require('./routes');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
+const static = express.static(__dirname + '/public');
 
 app.use(cookieParser());
-
+app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));

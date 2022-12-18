@@ -1,31 +1,30 @@
+<h1>Login</h1>
+{{#if error}}
+<p>{{error_message}}</p>
+{{/if}}
+<div>
+    <form method="POST" id="login-form" action="/user/userlogin">
+        <label for="usernameInput">Username:</label>
+        <input type="text" name="usernameInput" id="usernameInput">
+        <label for="passwordInput">Password:</label>
+        <input type="password" name="passwordInput" id="passwordInput">
+        <input class="login" type="submit" value="login" id="login">
+    </form>
 
-    <h1>Login</h1>
-    {{#if error}}
-        <p>{{error_message}}</p>
-    {{/if}}
-    <div>
-        <form  method="POST" id="login-form" action="/user/userlogin">
-                <label for="usernameInput">Username:</label>
-                <input type="text" name="usernameInput" id="usernameInput">
-                <label for="passwordInput">Password:</label>
-                <input type="password" name="passwordInput" id="passwordInput">
-                <input type="submit" value="login" id="login">
-        </form>
-        
-    </div>
-    <div>
-        <form method="POST" id="register-form" action="/user/register">
-                <label for="usernameInput">Username:</label>
-                <input type="text" name="usernameInput" id="usernameInput">
-                <label for="passwordInput">Password:</label>
-                <input type="password" name="passwordInput" id="passwordInput">
-                <label for="firstname"> firstName: </label>
-                <input type="text" name="firstname" id="firstname" />  
-                <label for="lastname"> lastName: </label>
-                <input type="text" name="lastname" id="lastname" />
-                <label for="age"> age: </label>
-                <input type="number" name="age" id="age" />
-                <input type="submit" value="register" id="register">
-        </form>
-        
-    </div>
+</div>
+<div>
+    <form method="POST" id="register-form" action="/user/register">
+        <label for="usernameInput">Username:</label>
+        <input type="text" name="usernameInput" id="usernameInput">
+        <label for="passwordInput">Password:</label>
+        <input type="password" name="passwordInput" id="passwordInput">
+        <label for="firstname"> firstName: </label>
+        <input type="text" name="firstname" id="firstname" />
+        <label for="lastname"> lastName: </label>
+        <input type="text" name="lastname" id="lastname" />
+        <label for="age"> age: </label>
+        <input type="number" name="age" id="age" />
+        <input class="register" type="submit" value="register" id="register">
+    </form>
+
+</div>

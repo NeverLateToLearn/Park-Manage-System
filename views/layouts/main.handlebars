@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
+
 <body>
-    <li><a href="/">Home</a></li>
-    <li><a href="/events">Events</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
             {{#if userLoggedIn}}
-                <li><a href="/user/userprofile" id="profile">Profile</a></li>
-                <li><a href="/user/logout" id ="logout">Logout</a></li>
+            <li><a href="/user/userprofile" id="profile">Profile</a></li>
+            <li><a href="/user/logout" id="logout">Logout</a></li>
             {{else}}
-                <li><a href="/user/userlogin" id="auth">Login</a></li>
-                <li><a href="/manager">Manager</a></li>
+            <li><a href="/user/userlogin" id="auth">Login</a></li>
+            <li><a href="/manager">Manager</a></li>
             {{/if}}
-    
+        </ul>
+    </nav>
+
     <main>
         {{{body}}}
     </main>
     {{#if error}}
-        <p>{{error_message}}</p>
+    <p>{{error_message}}</p>
     {{/if}}
 </body>
+
 </html>

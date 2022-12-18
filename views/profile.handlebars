@@ -1,31 +1,31 @@
 <main>
     {{#if error}}
-        <p>{{error_message}}</p>
+    <p>{{error_message}}</p>
     {{/if}}
-        <p>{{userName}}</p>
-        <h1>{{firstName}} {{lastName}} </h1>
-        <p>{{age}}</p>
-        </br>
-        <p><a href="/user/myProfile">Edit Profile</a></p>
+    <h1>{{userName}}</h1>
+    <h2>{{firstName}} {{lastName}} </h2>
+    <h3>{{age}}</h3>
+    </br>
+    <p><a href="/user/myProfile">Edit Profile</a></p>
 
-    
+
     <div class="card-wide" id="right">
         <h2>Reviews</h2>
         {{#each reviews}}
         <div>
-                <div class="reviewHeading">
-                    <div class="reviewerName">
-                        <p class = "event_name"><a href="/events/{{this.review.event._id}}">{{this.event.name}}</a></p>
-                    </div>
-                    <div class="reviewerRating">
-                        <p class = "event_rating">>Your Rating: {{this.review.rating}}</a></p>
-                    </div>
+            <div class="reviewHeading">
+                <div class="reviewerName">
+                    <p class="event_name"><a href="/events/{{this.review.event._id}}">{{this.event.name}}</a></p>
                 </div>
-                
-                <div class = "reviewText">
-                    <p>{{this.review.text}}</p>
+                <div class="reviewerRating">
+                    <p class="event_rating">>Your Rating: {{this.review.rating}}</a></p>
                 </div>
+            </div>
+
+            <div class="reviewText">
+                <p>{{this.review.text}}</p>
+            </div>
         </div>
         {{/each}}
-    
+
 </main>

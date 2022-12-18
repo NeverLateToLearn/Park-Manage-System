@@ -5,25 +5,26 @@
         <label for="searchByEventName">
             <form id="searchEvent" method="POST" action="/events/searchEventByName">
                 <input id="searchByEventName" type="text" name="searchByEventName" placeholder="Search by name" />
-                <input type="submit" value="Search" />
+                <input class="search" type="submit" value="Search" />
             </form>
         </label>
 
         <label for="searchByDate">
             <form id="searchDate" method="POST" action="/events/searchByDate">
                 <input id="searchByDate" type="text" name="searchByDate" placeholder="Search by date" />
-                <input type="submit" value="Search">yyyy/mm/dd</input>
+                <input class="search" type="submit" value="Search"> yyyy/mm/dd</input>
             </form>
         </label>
+        <div class="row">
+            <div class="column"><a href="/event/sports">Sports</a></div>
+            <div class="column"><a href="/event/art">Art</a></div>
+            <div class="column"><a href="/event/concert">Concert</a></p>
+            </div>
+        </div>
 
-        <p><a href="/event/sports">Sports</a></p>
-        <p><a href="/event/art">Art</a></p>
-        <p><a href="/event/concert">Concert</a></p>
-
-        
 
 
 
-        
+
     </div>
 </main>

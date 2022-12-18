@@ -1,0 +1,51 @@
+body,
+html {
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+
+}
+
+.row {
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+h1 {
+    color: rgb(127, 223, 255);
+}
+
+h2 {
+    color: rgb(0, 8, 255)
+}
+
+p {
+    color: rgb(68, 0, 255)
+}
+
+.search {
+    background-color: red;
+    color: white;
+}
+
+.login {
+    background-color: blue;
+    color: azure;
+}
+
+.register {
+    background-color: blue;
+    color: azure;
+}
